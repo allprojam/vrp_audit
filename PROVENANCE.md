@@ -29,11 +29,11 @@ Format: `| claim | value | path:line | token |
 | RESULTS — IV>RV, PK | 65.6% | docs/RESULT.md:27 | 65.6% |
 | RESULTS — IV>RV, GK | 62.8% | docs/RESULT.md:28 | 62.8% |
 | RESULTS — worst period, CC | -2.249 | docs/RESULT.md:26 | 2.249 |
-| RESULTS — mdd/mean, CC | 501.7 | docs/RESULT.md:82 | 501.7 |
-| RESULTS — net at observed spread, CC | -1.2504 | docs/RESULT.md:71 | 1.2504 |
-| RESULTS — net at observed spread, PK | -1.3861 | docs/RESULT.md:72 | 1.3861 |
-| RESULTS — net at observed spread, GK | -1.4370 | docs/RESULT.md:73 | 1.4370 |
-| RESULTS — premium as fraction of spot | 5.65% | docs/RESULT.md:66 | 5.65% |
+| RESULTS — mdd/mean, CC | 501.7 | docs/RESULT.md:88 | 501.7 |
+| RESULTS — net at observed spread, CC | -1.2504 | docs/RESULT.md:77 | 1.2504 |
+| RESULTS — net at observed spread, PK | -1.3861 | docs/RESULT.md:78 | 1.3861 |
+| RESULTS — net at observed spread, GK | -1.4370 | docs/RESULT.md:79 | 1.4370 |
+| RESULTS — premium as fraction of spot | 5.65% | docs/RESULT.md:72 | 5.65% |
 | RESULTS — P&L linear-only, CC | +0.2105 | docs/ADDENDUM_03.md:22 | 0.2105 |
 | RESULTS — P&L with dispersion, CC | +0.1670 | docs/ADDENDUM_03.md:22 | 0.1670 |
 | RESULTS — dispersion (Jensen) effect, CC | -0.0435 | docs/ADDENDUM_03.md:22 | 0.0435 |
