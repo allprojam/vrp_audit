@@ -37,6 +37,20 @@ Against **premium** notional it removes ~35× more. Resolved **before any result
 the prereg (`e1cc0def` still verifies): C2 must clear the stricter premium basis.
 See `docs/ADDENDUM_01.md`.
 
+## ⚠️ Addendum 02 — G3 barely bites, and the spread is 19× the gate
+
+Two more findings, both before any result:
+
+- **G3 is close to non-binding.** Cumulative premium grows ~linearly while drawdown grows
+  ~`sd·√n`, so a 50% ratio gets *easier* to pass as the sample grows. Monte Carlo (2,000 paths × 33
+  periods): **0% fail** on a plausible premium, 22% only when the premium is thin.
+- **The observed spread is 385 bp of premium = 19.2× the G4 gate.** ADDENDUM 01 compared it to the
+  gate as "~22 bp of spot" — the right number against the wrong denominator. At the observed
+  spread, round-trip cost is `~1.34` in variance-P&L units against gross premium `~0.19`.
+
+**C2 should be expected to fail.** The locked sweep `{0,5,10,20,40}` explores only the region where
+costs are 10–20× too low.
+
 ## Run it
 
 ```bash

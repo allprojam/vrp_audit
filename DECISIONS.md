@@ -123,3 +123,25 @@ use `sqrt(365)`** — no fix needed. Recorded because the near-miss is the point
 1000 daily DVOL observations yield `n_eff ≈ 33` non-overlapping 30-day windows. Treating n=1000 as
 independent inflates a t-statistic by `sqrt(30) ≈ 5.5x`. G5 exists to prevent exactly this, and
 `n_eff ≈ 33` is the binding limit of the whole study.
+
+### V-10 · Convert denominators at the point of comparison, not in prose — LOCKED
+ADDENDUM 01 compared "3.85% relative spread" to "20 bps" and concluded the spread was *just over*
+the gate, while in the same breath rendering the spread as "~22 bp of **spot**". Correctly stated
+the spread is **385 bp of premium = 19.2x** the gate. Both individual numbers were right; the
+sentence joining them was wrong. **Rule:** never place two figures in one comparison unless they
+share a denominator, and write the conversion inline when they do not. Same failure class as
+`gold_macro`'s "0 for 9" — true components, untrue aggregate.
+
+### V-11 · A tail gate must be checked against sample length — LOCKED
+G3's 50%-of-cumulative-premium threshold is nearly non-binding: cumulative premium grows ~linearly
+while drawdown grows ~`sd*sqrt(n)`, so the ratio falls as `n` rises. Monte Carlo (2,000 paths x 33
+periods) puts the fail rate at **0%** on a plausible IV-RV gap, 22% only when the premium is thin.
+Retained as written for the verdict; a stricter diagnostic (`mdd / mean_pnl`) is added and reported
+beside it. A tail test whose bite depends on the sample is not a tail test.
+
+### V-12 · The locked cost sweep is optimistic by an order of magnitude — LOCKED
+The prereg sweeps `c ∈ {0,5,10,20,40}` bp of premium. The observed live spread is **385 bp of
+premium** — 19.2x the sweep's top end. At that spread the round-trip cost in variance-P&L units is
+`~1.34` against gross premium `~0.19`. **C2 should be expected to fail**, and a locked-sweep pass
+must not be reported as C2 PASS without also reporting this computation. The next prereg must
+derive the cost range from a measured spread rather than choosing round numbers.

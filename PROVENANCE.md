@@ -16,6 +16,10 @@ Format: `| claim | value | path:line | token |
 | gross variance P&L at IV .50/RV .45 | 0.1900 | docs/ADDENDUM_01.md:21 | 0.1900 |
 | 30d ATM premium as % of spot | 5.73% | docs/ADDENDUM_01.md:39 | 5.73% |
 | 3.85% relative spread in spot terms | 22 bp of spot | docs/ADDENDUM_01.md:40 | 22 bp of spot |
+| Observed spread vs G4 gate | 19.2x over | docs/ADDENDUM_02.md:41 | 19.2 |
+| G3 fail rate, plausible premium | 0% | docs/ADDENDUM_02.md:20 | 0% |
+| G3 fail rate, thin premium | 22% | docs/ADDENDUM_02.md:21 | 22% |
+| Round-trip cost at observed spread | 1.34 | docs/ADDENDUM_02.md:58 | 1.34 |
 
 ## Superseded — never cite as current (A-21)
 

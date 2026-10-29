@@ -10,7 +10,8 @@ import csv, json, math, pathlib, statistics as st
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 H = 30                      # 30-day realized window
-COSTS_BP = [0, 5, 10, 20, 40]   # round-trip cost sweep, bps of notional
+COSTS_BP = [0, 5, 10, 20, 40]   # round-trip cost sweep, bps of PREMIUM (see ADDENDUM_01)
+OBSERVED_SPREAD = 0.0385        # median relative bid-ask, live chain 2026-10-29 (ADDENDUM_02)
 
 
 def load(name):
@@ -114,6 +115,12 @@ def main():
         block["net_mean_pnl_by_cost_variance_notional"] = {c: st.mean(pnl) - c / 1e4 for c in COSTS_BP}
         block["net_mean_pnl_by_cost_premium_notional"] = {
             c: st.mean(pnl) - 2 * (c / 1e4) / mean_prem for c in COSTS_BP}
+        # ADDENDUM_02: the observed live spread, as a cost scenario in its own right
+        block["observed_spread_pct_premium"] = OBSERVED_SPREAD
+        block["net_at_observed_spread"] = st.mean(pnl) - 2 * OBSERVED_SPREAD / mean_prem
+        # ADDENDUM_02 tail diagnostics (reported beside G3, never replacing it)
+        block["frac_periods_rv_gt_iv"] = sum(1 for x in vrp if x < 0) / len(vrp)
+        block["mdd_over_mean_pnl"] = mdd / st.mean(pnl) if st.mean(pnl) > 0 else None
         out["estimators"][est] = block
 
     # gates, as written in the prereg
@@ -129,6 +136,9 @@ def main():
             # ADDENDUM_01: the premium-notional basis is the binding one
             "G4_cost_20bp_premium_basis": b["net_mean_pnl_by_cost_premium_notional"][20] > 0,
             "G4_cost_20bp_variance_basis": b["net_mean_pnl_by_cost_variance_notional"][20] > 0,
+            # ADDENDUM_02: C2 must not be called PASS if the observed spread kills it
+            "C2_viable_at_observed_spread": b["net_at_observed_spread"] > 0,
+            "G3_tail_diagnostic_mdd_over_mean": b["mdd_over_mean_pnl"],
         }
     out["gates"] = g
     out["n_eff_ok"] = out["n_eff"] >= 30

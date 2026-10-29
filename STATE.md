@@ -7,6 +7,13 @@
 > the gate cannot fail — which inverts its purpose. Resolved **before results**, without editing the
 > prereg: C2 must clear the **premium-notional** basis, which is **34.9× harsher** at 20 bp.
 > See `docs/ADDENDUM_01.md`, `V-06`, `V-07`.
+>
+> ⚠️ **ADDENDUM 02 also exists and is binding.** Two further pre-run findings: (a) **G3 is nearly
+> non-binding** (Monte Carlo fail rate **0%** on a plausible premium) — retained as written, with a
+> stricter diagnostic reported beside it; (b) ADDENDUM 01's prose compared **22 bp of spot** to
+> **20 bp of premium** — the correct comparison is **385 bp of premium = 19.2x the gate**, at which
+> round-trip cost in variance-P&L units is **~1.34** against gross premium **~0.19**.
+> **Expect C2 to fail.** See `docs/ADDENDUM_02.md`, `V-10`–`V-12`.
 
 ---
 
@@ -18,7 +25,7 @@
 | Data | fetched & committed: 1000 DVOL days (2024-02-03→2026-10-29), 1101 perp days |
 | Analysis | `src/vrp.py` written, **deliberately not executed** |
 | Result | `runs/vrp.json` — does not exist yet |
-| Addenda | **01** — G4 cost denominator (binding, pre-results) |
+| Addenda | **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
 | Open blockers | none to running it |
 
 ## The question, and why it is the right one
