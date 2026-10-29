@@ -28,6 +28,16 @@ def day(ms):
     return time.strftime("%Y-%m-%d", time.gmtime(ms / 1000))
 
 
+def closed_only(rows, period_ms=86400000):
+    """V-19: a daily bar is usable only once its period has ENDED.
+
+    Deribit daily bars close at 00:00 UTC. Fetching at 20:50 UTC returns a partial bar that keeps
+    moving (measured: DVOL 37.94 -> 41.83 within 2h). Drop any bar whose end is in the future.
+    """
+    now = time.time() * 1000
+    return [r for r in rows if r[0] + period_ms <= now]
+
+
 def main():
     DATA.mkdir(exist_ok=True)
     now = int(time.time() * 1000)
@@ -35,6 +45,10 @@ def main():
     # 1) DVOL -- capped at 1000 points by the API, ask for 3 years to be sure we get all of it
     iv = get("get_volatility_index_data", currency="BTC",
              start_timestamp=now - 1100 * 86400000, end_timestamp=now, resolution="1D")["data"]
+    iv_all = len(iv)
+    iv = closed_only(iv)
+    if len(iv) != iv_all:
+        print(f"  dropped {iv_all - len(iv)} open bar(s) per V-19")
     ivp = DATA / "btc_dvol_1d.csv"
     with ivp.open("w", newline="") as f:
         w = csv.writer(f)
@@ -49,6 +63,10 @@ def main():
     ppp = DATA / "btc_perp_1d.csv"
     cols = ["ticks", "open", "high", "low", "close"]
     rows = list(zip(*[px[c] for c in cols]))
+    n_all = len(rows)
+    rows = closed_only([(t,) + r[1:] for t, r in [(r[0], r) for r in rows]])
+    if len(rows) != n_all:
+        print(f"  dropped {n_all - len(rows)} open bar(s) per V-19")
     with ppp.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["date", "open", "high", "low", "close"])

@@ -39,6 +39,14 @@ Format: `| claim | value | path:line | token |
 | RESULTS — dispersion (Jensen) effect, CC | -0.0435 | docs/ADDENDUM_03.md:22 | 0.0435 |
 | RESULTS — 1/IV^2 weighting effect, CC | -0.0551 | docs/ADDENDUM_03.md:41 | 0.0551 |
 | RESULTS — E[RV] under GK | 0.4900 | docs/ADDENDUM_03.md:24 | 0.4900 |
+| OCT29 — single-day RV, CC | 23.2% | docs/ADDENDUM_04.md:48 | 23.2% |
+| OCT29 — single-day RV, PK | 53.4% | docs/ADDENDUM_04.md:49 | 53.4% |
+| OCT29 — single-day RV, GK | 61.2% | docs/ADDENDUM_04.md:50 | 61.2% |
+| OCT29 — DVOL at snapshot | 41.8% | docs/ADDENDUM_04.md:51 | 41.8% |
+| OCT29 — GK/CC ratio | 2.63x | docs/ADDENDUM_04.md:54 | 2.63 |
+| OCT29 — UTC daily move | -1.21% | docs/ADDENDUM_04.md:33 | 1.21% |
+| OCT29 — intraday range | 4.76% | docs/ADDENDUM_04.md:53 | 4.76% |
+| OCT29 — stale committed DVOL close | 37.94 | docs/ADDENDUM_04.md:23 | 37.94 |
 
 ## Superseded — never cite as current (A-21)
 

@@ -1,0 +1,31 @@
+{
+ "asof_utc": "2026-10-29T22:47:57Z",
+ "day": "2026-10-29",
+ "bar_closed": false,
+ "exploratory": true,
+ "preregistered": false,
+ "perp": {
+  "open": 79769.0,
+  "high": 81922.0,
+  "low": 78199.0,
+  "close": 78805.0
+ },
+ "iv_now": 41.83,
+ "iv_open": 37.26,
+ "iv_high": 42.23,
+ "iv_low": 35.9,
+ "iv_change_from_open": 0.12265163714439078,
+ "rv_single_day": {
+  "cc": 0.23228802985677813,
+  "pk": 0.5336502593445637,
+  "gk": 0.6115136508473316
+ },
+ "intraday_range_pct": 4.760930446680911,
+ "utc_daily_move_pct": -1.2084895134701457,
+ "rv_gt_iv": {
+  "cc": false,
+  "pk": true,
+  "gk": true
+ },
+ "cc_vs_gk_ratio": 2.6325663497355962
+}

@@ -187,3 +187,27 @@ dispersion effect **−0.037 to −0.044** (roughly constant); `1/IV²` weightin
 **−0.046 to −0.055** (larger); and the primary driver is that **E[RV] ≈ E[IV]** once intraday
 ranges are counted (gap −3.9 to −5.2 vol points from CC). Crediting convexity alone with the
 reversal overstates it. Both effects are genuine; they are ranked wrongly in the post-mortem.
+
+### V-19 · A fetch must reject a bar whose close time is in the future — LOCKED
+`src/fetch.py` ran at 20:50 UTC and stored a **partial** Oct 29 daily bar (Deribit bars close
+00:00 UTC; verified). The committed row said DVOL 37.94 at 20:50; by 22:48 it was **41.83**. The
+frozen `runs/vrp.json` was unharmed (last IV obs 2026-09-30, last RV window ends 2026-10-28), but
+`data/*.csv` carry a known-wrong bar. **Rule:** a data fetch must drop any bar whose period has not
+ended, or stamp it `partial: true` and refuse to let it enter a statistic.
+
+### V-20 · An event observed before locking cannot be called pre-registered — LOCKED
+The Oct 29 snapshot was measured before any hypothesis could be locked, so it is **exploratory**
+(`docs/ADDENDUM_04.md`, `runs/oct29_event.json` carry `"exploratory": true`). It carries the 0.85
+prose ceiling and may never be reported as a pre-registered result. Post-hoc event studies are how
+"we predicted this" gets manufactured.
+
+### V-21 · Single-day RV is necessary but not sufficient for negative variance P&L — LOCKED
+Oct 29 2026: PK 53.4% / GK 61.2% exceeded IV 41.8% while CC (23.2%) did not — G2 visible inside one
+day (GK/CC = **2.63x**). But this does **not** validate V-13: 30-day variance P&L depends on the
+sum over the window, and ADDENDUM_03 showed the dominant term is `1/IV²` weighting, not Jensen.
+Do not upgrade a one-day observation into a strategy claim.
+
+### V-22 · A rolling-window return is not a UTC-candle return — LOCKED
+CoinGecko's "24h −2.75%" is a rolling window; the UTC daily candle was **−1.21%**. Both correct,
+different denominators. Comparing a rolling return to a UTC-candle realized vol is the **V-10**
+error in time dimension rather than notional dimension.

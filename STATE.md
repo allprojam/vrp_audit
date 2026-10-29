@@ -25,7 +25,7 @@
 | Data | fetched & committed: 1000 DVOL days (2024-02-03→2026-10-29), 1101 perp days |
 | Analysis | **executed 2026-10-29**, `runs/vrp.json` written |
 | Result | **C1 FAIL · C2 FAIL** — see `docs/RESULT.md` |
-| Addenda | **03** post-run decomposition (V-16..V-18) · **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
+| Addenda | **04** Oct 29 event snapshot, EXPLORATORY (V-19..V-22) · **03** post-run decomposition (V-16..V-18) · **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
 | Open blockers | none to running it |
 
 ## The question, and why it is the right one
@@ -89,3 +89,22 @@ vol. **C1 fails G2. C2 fails everything, by ~10x, not at the margin.**
 ```bash
 python3 src/check_all.py
 ```
+
+## Oct 29 2026 Binance hack — event snapshot (exploratory)
+
+**Not pre-registered.** Measured before any lock could be written, so it carries the 0.85 ceiling.
+`runs/oct29_event.json` · `docs/ADDENDUM_04.md` · `src/event_oct29.py`. `runs/vrp.json` untouched.
+
+| | |
+|---|---|
+| UTC candle | O 79,769 · H 81,922 · L 78,199 · C 78,805 |
+| DVOL | 37.26 → **41.83 (+12.3%)** |
+| single-day RV (√365) | CC **23.2%** · PK **53.4%** · GK **61.2%** |
+| RV > IV? | CC ✗ · **PK ✓** · **GK ✓** |
+
+**GK/CC = 2.63×** — `G2` reproducing inside a single day. The close moved −1.21% while the range was
+4.76%; a CC view says "quiet day, sell vol," the honest view says the day realized 1.5× implied.
+
+Two defects found while preparing it: **V-19** (committed Oct 29 bar was fetched 3h10m before close
+and is stale — `fetch.py` now drops open bars) and **V-22** (CoinGecko's "−2.75%" is a *rolling*
+window; the UTC candle was **−1.21%**).
