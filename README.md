@@ -1,6 +1,19 @@
 # vrp_audit — can an individual harvest the BTC variance risk premium?
 
-**Status: 🔒 PREREG LOCKED `e1cc0def…`, analysis NOT yet run.** Nothing here is a result.
+**Status: ✅ COMPLETE.** Prereg `e1cc0def` verified after the run.
+**Verdict: C1 FAIL (estimator robustness) · C2 FAIL (all gates).**
+
+## The result in four lines
+
+| estimator | mean VRP (vol pts) | mean variance P&L | net at observed spread |
+|---|---|---|---|
+| CC (closes only) | +0.0549 | +0.1119 | **−1.2504** |
+| PK (high/low) | +0.0156 | −0.0238 | −1.3861 |
+| GK (full OHLC) | **+0.0029** | −0.0747 | −1.4370 |
+
+**The premium falls 95% once realized vol is measured properly**, from +5.49 to +0.29 vol points.
+That is the finding: the BTC variance risk premium is real in sign but mostly a measurement
+artifact, and it is unreachable at retail spreads by ~10×.
 
 ## The question
 
@@ -54,8 +67,8 @@ costs are 10–20× too low.
 ## Run it
 
 ```bash
-python3 src/check_all.py      # verify the locked state (3/3 now)
-python3 src/vrp.py            # NOT yet run — writes runs/vrp.json
+python3 src/check_all.py      # 3/3 — prereg e1cc0def still verifies after the run
+python3 src/vrp.py            # reproduces runs/vrp.json (offline, from data/*.csv)
 ```
 
 Then write `docs/RESULT.md` from the template, report gates **as written**, and register every

@@ -1,6 +1,6 @@
 # STATE — BTC variance risk premium audit
 
-**Phase:** ✅ **PREREG LOCKED, analysis not yet run** · **Verdict: pending**
+**Phase:** ✅ **RUN COMPLETE** · **Verdict: C1 FAIL (G2 estimator robustness) · C2 FAIL (all gates)**
 
 > ⚠️ **ADDENDUM 01 exists and is binding.** The locked cost gate G4 said "bps of notional"
 > without naming a denominator. Under *variance* notional, `c=20bp` eats **1.05%** of gross P&L and
@@ -23,8 +23,8 @@
 |---|---|
 | Prereg | **LOCKED** `e1cc0def…` at 2026-10-29T20:51Z — `python3 src/prereg.py verify docs/HYPOTHESIS.md` |
 | Data | fetched & committed: 1000 DVOL days (2024-02-03→2026-10-29), 1101 perp days |
-| Analysis | `src/vrp.py` written, **deliberately not executed** |
-| Result | `runs/vrp.json` — does not exist yet |
+| Analysis | **executed 2026-10-29**, `runs/vrp.json` written |
+| Result | **C1 FAIL · C2 FAIL** — see `docs/RESULT.md` |
 | Addenda | **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
 | Open blockers | none to running it |
 
@@ -60,11 +60,23 @@ that sweep — the spread may dominate the premium entirely. That is a **prior**
 See `docs/HYPOTHESIS.md` §Kill conditions — five of them, including "if I find myself explaining
 why a negative number is really positive, stop and re-run the accounting."
 
+## Findings (executed)
+
+| est | mean VRP (vol pts) | IV>RV | mean variance P&L | net at observed spread |
+|---|---|---|---|---|
+| CC | +0.0549 | 70.6% | +0.1119 | −1.2504 |
+| PK | +0.0156 | 65.6% | −0.0238 | −1.3861 |
+| GK | +0.0029 | 62.8% | −0.0747 | −1.4370 |
+
+**The premium collapses 95% from CC to GK** — it is largely an artifact of under-measuring realized
+vol. **C1 fails G2. C2 fails everything, by ~10x, not at the margin.**
+
 ## Next steps
 
-1. `python3 src/vrp.py` → `runs/vrp.json`.
-2. Write `docs/RESULT.md` from `docs/RESULT_TEMPLATE.md`. Report gates **as written** (I-7).
-3. Register every quoted figure in `PROVENANCE.md`; `python3 src/check_all.py` must pass.
+1. ~~Run `src/vrp.py`~~ — done.
+2. ~~Write `docs/RESULT.md`~~ — done.
+3. ~~Register figures in `PROVENANCE.md`~~ — done, 29/29.
+4. **This study is closed.** No further passes on this dataset.
 
 ## Do not do
 

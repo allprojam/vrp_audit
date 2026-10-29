@@ -20,6 +20,20 @@ Format: `| claim | value | path:line | token |
 | G3 fail rate, plausible premium | 0% | docs/ADDENDUM_02.md:20 | 0% |
 | G3 fail rate, thin premium | 22% | docs/ADDENDUM_02.md:21 | 22% |
 | Round-trip cost at observed spread | 1.34 | docs/ADDENDUM_02.md:58 | 1.34 |
+| RESULTS — mean VRP, CC | +0.0549 vol pts | docs/RESULT.md:26 | 0.0549 |
+| RESULTS — mean VRP, PK | +0.0156 vol pts | docs/RESULT.md:27 | 0.0156 |
+| RESULTS — mean VRP, GK | +0.0029 vol pts | docs/RESULT.md:28 | 0.0029 |
+| RESULTS — nominal n | 971 | docs/RESULT.md:21 | 971 |
+| RESULTS — effective n | 32 | docs/RESULT.md:21 | 32 |
+| RESULTS — IV>RV, CC | 70.6% | docs/RESULT.md:26 | 70.6% |
+| RESULTS — IV>RV, PK | 65.6% | docs/RESULT.md:27 | 65.6% |
+| RESULTS — IV>RV, GK | 62.8% | docs/RESULT.md:28 | 62.8% |
+| RESULTS — worst period, CC | -2.249 | docs/RESULT.md:26 | 2.249 |
+| RESULTS — mdd/mean, CC | 501.7 | docs/RESULT.md:82 | 501.7 |
+| RESULTS — net at observed spread, CC | -1.2504 | docs/RESULT.md:71 | 1.2504 |
+| RESULTS — net at observed spread, PK | -1.3861 | docs/RESULT.md:72 | 1.3861 |
+| RESULTS — net at observed spread, GK | -1.4370 | docs/RESULT.md:73 | 1.4370 |
+| RESULTS — premium as fraction of spot | 5.65% | docs/RESULT.md:66 | 5.65% |
 
 ## Superseded — never cite as current (A-21)
 

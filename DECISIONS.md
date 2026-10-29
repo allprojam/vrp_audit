@@ -145,3 +145,25 @@ premium** — 19.2x the sweep's top end. At that spread the round-trip cost in v
 `~1.34` against gross premium `~0.19`. **C2 should be expected to fail**, and a locked-sweep pass
 must not be reported as C2 PASS without also reporting this computation. The next prereg must
 derive the cost range from a measured spread rather than choosing round numbers.
+
+### V-13 · Gate the quantity that determines P&L, not a proxy for it — LOCKED
+G1 was written on `mean(IV − RV)` in **vol points**, but the trade's P&L is
+`(IV² − RV²)/IV²` — **quadratic** in vol. On PK and GK, G1 PASSES (`+0.0156`, `+0.0029`) while the
+variance trade LOSES (`−0.0238`, `−0.0747`). Both are correct; they measure different things. One
+spike at RV = 1.20 vs IV = 0.50 costs 4.76 in variance units and erases ~25 benign periods at +0.19.
+The prereg therefore had a gate that could pass while the position lost money. **Not patched** — the
+verdict is already FAIL and rewriting it post-results would be exactly the crime the lock prevents.
+The finding is logged instead. Next prereg: every gate names the P&L quantity it gates.
+
+### V-14 · A premium measured on closes only is not a premium — CONFIRMED
+The pre-run rule (V-03) was: report CC, PK and GK, and fail C1 if the premium shows under CC only.
+It did. Mean VRP falls **+0.0549 → +0.0156 (−72%) → +0.0029 (−95%)** from close-to-close to
+Parkinson to Garman-Klass. CC ignores intraday extremes and gap risk, which is exactly the variance
+a seller is short, so it manufactures a premium by under-measuring RV. **G2 is the single most
+valuable gate in this study**: without it the result would have been reported as a clean C1 PASS.
+
+### V-15 · C2 fails by an order of magnitude, not at the margin — CONFIRMED
+At the live chain's median relative bid-ask (3.85% of premium, premium ≈ 5.65% of spot), net mean
+variance P&L is **−1.2504 / −1.3861 / −1.4370** on CC / PK / GK against gross of **+0.1119 /
+−0.0238 / −0.0747**. The locked cost sweep `{0,5,10,20,40}` bp tops out ~19x below the real spread.
+C2 is impossible for a price-taker here regardless of estimator or tail treatment.
