@@ -41,6 +41,12 @@ is what happened.** The "premium" is largely an artifact of under-measuring real
 
 ### G1 passes while the trade loses money — a spec defect, disclosed
 
+> **Corrected mechanism — see `docs/ADDENDUM_03.md` (`V-18`).** The negative PK/GK P&L is **not**
+> primarily a Jensen/convexity effect. Measured decomposition: dispersion (Jensen) `−0.037…−0.044`;
+> `1/IV²` weighting of the per-period payoff `−0.046…−0.055`; and the dominant term is
+> **E[RV] ≈ E[IV]** once intraday ranges are counted. Convexity is real, second in size, and was
+> initially credited with the whole reversal.
+
 For PK and GK, `mean(IV − RV) > 0` (G1 passes) while `mean((IV²−RV²)/IV²) < 0` (the variance trade
 loses). Both are correct; they measure different things. G1 is defined in **vol points** (linear);
 the P&L is **quadratic** in vol. A single spike at RV = 1.20 against IV = 0.50 loses 4.76 in

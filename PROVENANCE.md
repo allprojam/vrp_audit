@@ -34,6 +34,11 @@ Format: `| claim | value | path:line | token |
 | RESULTS — net at observed spread, PK | -1.3861 | docs/RESULT.md:72 | 1.3861 |
 | RESULTS — net at observed spread, GK | -1.4370 | docs/RESULT.md:73 | 1.4370 |
 | RESULTS — premium as fraction of spot | 5.65% | docs/RESULT.md:66 | 5.65% |
+| RESULTS — P&L linear-only, CC | +0.2105 | docs/ADDENDUM_03.md:22 | 0.2105 |
+| RESULTS — P&L with dispersion, CC | +0.1670 | docs/ADDENDUM_03.md:22 | 0.1670 |
+| RESULTS — dispersion (Jensen) effect, CC | -0.0435 | docs/ADDENDUM_03.md:22 | 0.0435 |
+| RESULTS — 1/IV^2 weighting effect, CC | -0.0551 | docs/ADDENDUM_03.md:41 | 0.0551 |
+| RESULTS — E[RV] under GK | 0.4900 | docs/ADDENDUM_03.md:24 | 0.4900 |
 
 ## Superseded — never cite as current (A-21)
 

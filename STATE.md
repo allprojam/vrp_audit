@@ -25,7 +25,7 @@
 | Data | fetched & committed: 1000 DVOL days (2024-02-03→2026-10-29), 1101 perp days |
 | Analysis | **executed 2026-10-29**, `runs/vrp.json` written |
 | Result | **C1 FAIL · C2 FAIL** — see `docs/RESULT.md` |
-| Addenda | **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
+| Addenda | **03** post-run decomposition (V-16..V-18) · **01** G4 cost denominator · **02** G3 tail threshold + spot/premium conversion (both binding, pre-results) |
 | Open blockers | none to running it |
 
 ## The question, and why it is the right one

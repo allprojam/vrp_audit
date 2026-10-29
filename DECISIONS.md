@@ -167,3 +167,23 @@ At the live chain's median relative bid-ask (3.85% of premium, premium ≈ 5.65%
 variance P&L is **−1.2504 / −1.3861 / −1.4370** on CC / PK / GK against gross of **+0.1119 /
 −0.0238 / −0.0747**. The locked cost sweep `{0,5,10,20,40}` bp tops out ~19x below the real spread.
 C2 is impossible for a price-taker here regardless of estimator or tail treatment.
+
+### V-16 · A payoff has three estimators; the prereg must name which one gates — LOCKED
+The same strategy has at least three defensible "mean variance P&L": the **per-period mean**
+`mean((IV²−RV²)/IV²)`, the **mean-based identity** `(E[IV²]−E[RV²])/E[IV²]`, and the **cumulative**
+sum. They differ here by up to **0.055** in variance-P&L units — 100% of the result at these
+magnitudes (CC: +0.1119 vs +0.1670). The prereg did not specify, so the code chose the per-period
+mean silently. **Next prereg states the payoff estimator explicitly and reports all three.**
+
+### V-17 · Persist the per-period series, not just aggregates — LOCKED
+`runs/vrp.json` stored aggregates only, so the post-run decomposition could not be computed from
+the committed artifact. Any explanation offered for a result must be checkable from a committed
+file or it is prose. Fixed by `runs/vrp_decomp.json`. **Rule:** a results artifact must contain
+enough to recompute every claim made in `RESULT.md`.
+
+### V-18 · Attribute the mechanism, not just the sign — CONFIRMED
+The Jensen/dispersion explanation for negative PK/GK P&L is **real but not dominant**. Measured:
+dispersion effect **−0.037 to −0.044** (roughly constant); `1/IV²` weighting effect
+**−0.046 to −0.055** (larger); and the primary driver is that **E[RV] ≈ E[IV]** once intraday
+ranges are counted (gap −3.9 to −5.2 vol points from CC). Crediting convexity alone with the
+reversal overstates it. Both effects are genuine; they are ranked wrongly in the post-mortem.
