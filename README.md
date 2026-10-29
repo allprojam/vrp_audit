@@ -90,3 +90,32 @@ STATE.md             phase, feasibility findings, next steps
 **Prose interpolates across gaps; executables don't.** Every number quoted must resolve to a
 `file:line` or JSON key, checked by script (`check_provenance.py`), and cross-repo decision IDs
 carry a prefix. Both guards exist because they caught their authors.
+## Verification scope
+
+`python3 src/check_all.py` → **3/3 PASS**: **34** registered provenance pointers resolve to their
+exact `file:line` or JSON key, `vrp_audit:V-NN` IDs are repo-scoped, and the original prereg
+`e1cc0def` still verifies **unchanged** after the run.
+
+**It does not verify:**
+
+- any claim about market making or spread capture — there is **no historical bid/ask archive** at
+  Deribit, so those claims are out of scope *by construction* (`V-02`),
+- the ~20 earlier-report style inferences from `gold_macro`,
+- the per-period IV/RV series before `runs/vrp_decomp.json` was added (`V-17`).
+
+## Three addenda, all written before their gates could be gamed
+
+| # | finding | binding effect |
+|---|---|---|
+| 01 | G4 swept "bps of notional" without naming a denominator | C2 must clear the **premium** basis, 34.9x harsher |
+| 02 | G3's 50%-of-cumulative threshold barely bites (0% fail on a plausible premium); the observed spread is 385 bp of **premium = 19.2x** the gate, not "just above" it | tail diagnostic `mdd/mean` added; C2 must clear the observed spread |
+| 03 | post-run: Jensen/dispersion is **second** in size, not first | mechanism re-ranked; `1/IV²` weighting −0.046…−0.055 is larger |
+
+`docs/HYPOTHESIS.md` was never edited after locking. Every correction went into an addendum.
+
+## Reproducible
+
+```bash
+python3 src/check_all.py   # 3/3
+python3 src/vrp.py         # offline from data/*.csv; rerun is byte-identical
+```

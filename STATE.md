@@ -75,7 +75,7 @@ vol. **C1 fails G2. C2 fails everything, by ~10x, not at the margin.**
 
 1. ~~Run `src/vrp.py`~~ — done.
 2. ~~Write `docs/RESULT.md`~~ — done.
-3. ~~Register figures in `PROVENANCE.md`~~ — done, 29/29.
+3. ~~Register figures in `PROVENANCE.md`~~ — done, 34/34 (5 more added by ADDENDUM_03).
 4. **This study is closed.** No further passes on this dataset.
 
 ## Do not do
