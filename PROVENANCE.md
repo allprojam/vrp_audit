@@ -12,6 +12,10 @@ Format: `| claim | value | path:line | token |
 | Effective sample size rule | n/30 | docs/HYPOTHESIS.md:58 | n/30 |
 | C2 requires surviving 20 bps | 20 bps | docs/HYPOTHESIS.md:77 | 20 bps |
 | Minimum acceptable n_eff | n_eff < 30 | docs/HYPOTHESIS.md:91 | n_eff |
+| 20bp eats 1.05% of gross variance P&L | 1.05% | docs/ADDENDUM_01.md:18 | 1.05% |
+| gross variance P&L at IV .50/RV .45 | 0.1900 | docs/ADDENDUM_01.md:21 | 0.1900 |
+| 30d ATM premium as % of spot | 5.73% | docs/ADDENDUM_01.md:39 | 5.73% |
+| 3.85% relative spread in spot terms | 22 bp of spot | docs/ADDENDUM_01.md:40 | 22 bp of spot |
 
 ## Superseded — never cite as current (A-21)
 

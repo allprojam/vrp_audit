@@ -49,6 +49,14 @@ def estimators(rows, i):
     return {"cc": cc, "pk": pk, "gk": gk}
 
 
+def premium_to_spot(iv, horizon_days=H):
+    """Rough ATM option premium as a fraction of spot (the basis on which the LIVE spread
+    was measured: 3.85% RELATIVE to premium). Used only to convert the cost sweep onto a
+    premium-notional basis per docs/ADDENDUM_01.md. This is an approximation and is labelled
+    as such in the output."""
+    return 0.4 * iv * math.sqrt(horizon_days / 365.0)
+
+
 def main():
     iv_rows, px_rows = load("btc_dvol_1d.csv"), load("btc_perp_1d.csv")
     days = sorted(set(iv_rows) & set(px_rows))
@@ -95,9 +103,17 @@ def main():
             "max_drawdown_unit": mdd,
             "worst_period_pnl": min(pnl),
         }
-        # G4: net of round-trip cost c bps -> cost in variance-P&L units, approximated
-        # linearly on notional: c bps of notional per round trip
-        block["net_mean_pnl_by_cost"] = {c: st.mean(pnl) - c / 1e4 for c in COSTS_BP}
+        # G4 -- TWO bases, per ADDENDUM_01. The prereg said "bps of notional" without naming
+        # the denominator; the addendum requires both and makes the STRICTER one binding.
+        #   basis A (variance notional): c bp subtracted directly from variance P&L
+        #   basis B (premium notional):  c bp of premium, and premium is ~premium_to_spot of
+        #                                spot, so expressed in variance-P&L units it is
+        #                                c/1e4 / premium_fraction, applied twice (in and out)
+        mean_prem = st.mean([premium_to_spot(iv) for iv, _ in pairs])
+        block["premium_frac_of_spot_mean"] = mean_prem
+        block["net_mean_pnl_by_cost_variance_notional"] = {c: st.mean(pnl) - c / 1e4 for c in COSTS_BP}
+        block["net_mean_pnl_by_cost_premium_notional"] = {
+            c: st.mean(pnl) - 2 * (c / 1e4) / mean_prem for c in COSTS_BP}
         out["estimators"][est] = block
 
     # gates, as written in the prereg
@@ -110,7 +126,9 @@ def main():
         g[est] = {
             "G1_existence": b["mean_vrp"] > 0 and b["frac_iv_gt_rv"] >= 0.5,
             "G3_tail": b["max_drawdown_unit"] <= 0.5 * max(b["cum_pnl_unit"], 1e-9),
-            "G4_cost_20bp": b["net_mean_pnl_by_cost"][20] > 0,
+            # ADDENDUM_01: the premium-notional basis is the binding one
+            "G4_cost_20bp_premium_basis": b["net_mean_pnl_by_cost_premium_notional"][20] > 0,
+            "G4_cost_20bp_variance_basis": b["net_mean_pnl_by_cost_variance_notional"][20] > 0,
         }
     out["gates"] = g
     out["n_eff_ok"] = out["n_eff"] >= 30

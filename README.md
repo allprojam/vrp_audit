@@ -29,6 +29,14 @@ risk** someone else wants transferred. It is the one accessible structural premi
 
 That last row is a **prior, not a result.** The study exists to test it.
 
+## ⚠️ Addendum 01 — the cost gate had an ambiguity
+
+The locked prereg swept cost in "bps of notional" without naming the denominator. Against
+**variance** notional, 20 bp removes only **1.05%** of gross P&L — a gate that cannot fail.
+Against **premium** notional it removes ~35× more. Resolved **before any result** without editing
+the prereg (`e1cc0def` still verifies): C2 must clear the stricter premium basis.
+See `docs/ADDENDUM_01.md`.
+
 ## Run it
 
 ```bash

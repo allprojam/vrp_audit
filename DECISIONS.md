@@ -97,3 +97,29 @@ This is the binding limitation of the study and must be stated in any result.
 Retail option fees are not verified from this host and will not be guessed. Cost is a sweep
 `c ∈ {0,5,10,20,40}` bps. C2 passes only if it survives `c = 20`. Surviving `c = 0` alone is a FAIL
 reported as a FAIL.
+
+### V-06 · Cost must name its denominator, in the prereg, before locking — LOCKED
+The locked text sweeps cost in "bps of notional" without saying **which** notional. For an option
+that ambiguity spans an order of magnitude: 20 bp against *variance* notional eats **1.05%** of
+gross P&L and the gate becomes nearly non-binding; against *premium* notional it is decisive.
+Resolved in `docs/ADDENDUM_01.md` **before results**, under I-6: C2 must clear the stricter
+(premium) basis. The prereg hash was not edited.
+**Lesson for the next prereg:** a cost term is under-specified unless it states
+`{per unit of X} / {round trip or one way} / {of what: premium, spot, or variance}`.
+
+### V-07 · A gate that cannot fail is not a gate — LOCKED
+G4 as originally coded would pass almost any result. A threshold is only meaningful relative to
+the scale of the quantity it is subtracted from; before locking, compute the gate's bite on a
+*plausible* value and confirm it can actually reject. This is the same class of error as a
+`p < 0.05` threshold with no stated effect size.
+
+### V-08 · Annualization must match the venue's convention — LOCKED
+Deribit DVOL is annualised on a **365-day** 24/7 basis. Annualising perp realized vol with the
+TradFi `sqrt(252)` would understate RV by `1 - sqrt(252/365) = 16.9%`, manufacturing a spurious
+positive VRP of several vol points. **Verified in `src/vrp.py`: all three estimators (CC, PK, GK)
+use `sqrt(365)`** — no fix needed. Recorded because the near-miss is the point.
+
+### V-09 · Overlapping windows inflate t-statistics by sqrt(H) — LOCKED
+1000 daily DVOL observations yield `n_eff ≈ 33` non-overlapping 30-day windows. Treating n=1000 as
+independent inflates a t-statistic by `sqrt(30) ≈ 5.5x`. G5 exists to prevent exactly this, and
+`n_eff ≈ 33` is the binding limit of the whole study.

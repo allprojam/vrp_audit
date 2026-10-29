@@ -2,6 +2,12 @@
 
 **Phase:** ✅ **PREREG LOCKED, analysis not yet run** · **Verdict: pending**
 
+> ⚠️ **ADDENDUM 01 exists and is binding.** The locked cost gate G4 said "bps of notional"
+> without naming a denominator. Under *variance* notional, `c=20bp` eats **1.05%** of gross P&L and
+> the gate cannot fail — which inverts its purpose. Resolved **before results**, without editing the
+> prereg: C2 must clear the **premium-notional** basis, which is **34.9× harsher** at 20 bp.
+> See `docs/ADDENDUM_01.md`, `V-06`, `V-07`.
+
 ---
 
 ## Status
@@ -12,6 +18,7 @@
 | Data | fetched & committed: 1000 DVOL days (2024-02-03→2026-10-29), 1101 perp days |
 | Analysis | `src/vrp.py` written, **deliberately not executed** |
 | Result | `runs/vrp.json` — does not exist yet |
+| Addenda | **01** — G4 cost denominator (binding, pre-results) |
 | Open blockers | none to running it |
 
 ## The question, and why it is the right one
